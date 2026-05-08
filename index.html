@@ -378,6 +378,7 @@
         margin: 0 auto 14px;
         display: block;
         box-shadow: 0 4px 20px rgba(192, 132, 252, 0.18);
+        background: #f5f0fa;
       }
       .result-deco {
         font-size: 14px;
@@ -568,10 +569,10 @@
         <div class="cover-badge">🎬 青春电影人设测试</div>
         <h1 class="cover-title">8 种青春女主人设<br />测测哪一种最像你？</h1>
         <div class="cover-chars">
-          <img src="images/moonlight.png" alt="风里白月光女主" />
-          <img src="images/sweet.png" alt="蜜桃反差甜妹女主" />
-          <img src="images/alpha.png" alt="高能大女主" />
-          <img src="images/road.png" alt="出走公路女主" />
+          <img src="images/moonlight.png" alt="风里白月光女主" loading="lazy" decoding="async" />
+          <img src="images/sweet.png" alt="蜜桃反差甜妹女主" loading="lazy" decoding="async" />
+          <img src="images/alpha.png" alt="高能大女主" loading="lazy" decoding="async" />
+          <img src="images/road.png" alt="出走公路女主" loading="lazy" decoding="async" />
         </div>
         <p class="cover-types">
           校园白月光、清冷智性、反差甜妹、高能大女主、<br />雨季文艺、鬼马少女、暖阳邻家……
@@ -1058,10 +1059,10 @@
         }
 
         const r = results[resultIdx];
-        document.getElementById("result-image").src = encodeURI(
-          "images/" + r.image + ".png",
-        );
-        document.getElementById("result-image").alt = r.name;
+        const resultImg = document.getElementById("result-image");
+        resultImg.src = encodeURI("images/" + r.image + ".png");
+        resultImg.alt = r.name;
+        resultImg.decoding = "async";
         document.getElementById("result-name").textContent = r.name;
 
         const tagsContainer = document.getElementById("result-tags");
