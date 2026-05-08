@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>20题测出你的青春电影女主人设</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        overflow-x: hidden;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+          "Microsoft YaHei", sans-serif;
+        background: linear-gradient(
+          145deg,
+          #fce8ec 0%,
+          #f5e6ff 50%,
+          #fff5f0 100%
+        );
+        color: #2d1b36;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+      .page {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        overflow-y: auto;
+      }
+      .page.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      /* ── Cover ── */
+      .cover-card {
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 32px;
+        padding: 36px 28px;
+        max-width: 380px;
+        width: 100%;
+        aspect-ratio: 3/4;
+        text-align: center;
+        box-shadow:
+          0 8px 40px rgba(192, 132, 252, 0.15),
+          0 2px 8px rgba(255, 107, 157, 0.08);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .cover-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b9d, #c084fc, #ff6b9d);
+      }
+      .cover-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #ff6b9d, #c084fc);
+        color: #fff;
+        font-size: 12px;
+        padding: 6px 16px;
+        border-radius: 20px;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+      }
+      .cover-title {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.35;
+        margin-bottom: 24px;
+        background: linear-gradient(135deg, #2d1b36, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .cover-sub {
+        font-size: 15px;
+        color: #7c6b8a;
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+      .cover-desc {
+        font-size: 14px;
+        color: #a895b3;
+        line-height: 1.5;
+        margin-bottom: 28px;
+      }
+      /* ── Cover character images ── */
+      .cover-chars {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .cover-chars img {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 2px 8px rgba(192, 132, 252, 0.18);
+        transition: transform 0.2s;
+      }
+      .cover-types {
+        font-size: 13px;
+        color: #8f7a9e;
+        line-height: 1.7;
+        margin-bottom: 22px;
+        text-align: center;
+        letter-spacing: 0.3px;
+      }
+      /* ── Buttons ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50px;
+        font-size: 17px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        min-height: 52px;
+        padding: 0 32px;
+        width: 100%;
+        max-width: 280px;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #ff6b9d, #c084fc);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(255, 107, 157, 0.35);
+      }
+      .btn-primary:hover {
+        box-shadow: 0 6px 28px rgba(255, 107, 157, 0.45);
+      }
+      .btn-outline {
+        background: transparent;
+        border: 2px solid #e8dff0;
+        color: #6b5b7b;
+        font-size: 15px;
+        min-height: 46px;
+      }
+      .btn-outline:hover {
+        background: #f8f4ff;
+      }
+      /* ── Decorative stars ── */
+      .deco {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.3;
+        font-size: 20px;
+        color: #c084fc;
+      }
+      .deco-1 {
+        top: 12%;
+        left: 8%;
+      }
+      .deco-2 {
+        top: 18%;
+        right: 10%;
+      }
+      .deco-3 {
+        bottom: 15%;
+        right: 12%;
+      }
+      .deco-4 {
+        bottom: 20%;
+        left: 6%;
+      }
+      /* ── Quiz ── */
+      .quiz-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 380px;
+        margin-bottom: 24px;
+        position: relative;
+      }
+      .btn-back {
+        background: none;
+        border: none;
+        color: #6b5b7b;
+        font-size: 15px;
+        cursor: pointer;
+        padding: 8px 4px;
+        min-width: 60px;
+        text-align: left;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .btn-back.hidden {
+        visibility: hidden;
+      }
+      .btn-back .arrow {
+        display: inline-block;
+        margin-right: 4px;
+      }
+      .question-number {
+        font-size: 14px;
+        font-weight: 600;
+        color: #c084fc;
+        letter-spacing: 1px;
+        white-space: nowrap;
+      }
+      .question-number span {
+        color: #d4c4e0;
+        font-weight: 400;
+      }
+      .quiz-card {
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 28px;
+        padding: 32px 24px;
+        max-width: 380px;
+        width: 100%;
+        box-shadow: 0 4px 24px rgba(192, 132, 252, 0.1);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+      .question-text {
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.55;
+        margin-bottom: 28px;
+        text-align: center;
+        min-height: 3.1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .option {
+        display: block;
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid #f0e8f5;
+        border-radius: 16px;
+        background: #fff;
+        font-size: 16px;
+        color: #2d1b36;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s;
+        line-height: 1.4;
+        -webkit-tap-highlight-color: transparent;
+        min-height: 52px;
+      }
+      .option:active {
+        transform: scale(0.98);
+      }
+      .option:hover {
+        border-color: #e0d0ec;
+        background: #faf8ff;
+      }
+      .option.selected {
+        border-color: #c084fc;
+        background: #f8f0ff;
+        box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.15);
+      }
+      .option .option-letter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #f5f0fa;
+        color: #7c6b8a;
+        font-size: 13px;
+        font-weight: 600;
+        margin-right: 12px;
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+      .option.selected .option-letter {
+        background: #c084fc;
+        color: #fff;
+      }
+      /* ── Progress ── */
+      .progress-wrap {
+        width: 100%;
+        max-width: 380px;
+        margin-top: 16px;
+      }
+      .progress-bar {
+        height: 4px;
+        background: #ece4f0;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ff6b9d, #c084fc);
+        border-radius: 4px;
+        transition: width 0.3s ease;
+        width: 0%;
+      }
+      .progress-label {
+        font-size: 12px;
+        color: #a895b3;
+        text-align: center;
+        margin-top: 6px;
+      }
+      /* ── Result ── */
+      .result-scroll {
+        width: 100%;
+        max-width: 380px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .result-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 28px;
+        padding: 36px 28px 32px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 8px 40px rgba(192, 132, 252, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+      .result-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b9d, #c084fc, #ff6b9d);
+      }
+      .result-image {
+        width: 160px;
+        height: 160px;
+        border-radius: 16px;
+        object-fit: cover;
+        margin: 0 auto 14px;
+        display: block;
+        box-shadow: 0 4px 20px rgba(192, 132, 252, 0.18);
+      }
+      .result-deco {
+        font-size: 14px;
+        color: #d4c4e0;
+        letter-spacing: 6px;
+        margin-bottom: 12px;
+      }
+      .result-label {
+        font-size: 15px;
+        color: #7c6b8a;
+        margin-bottom: 10px;
+      }
+      .result-name {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.3;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, #2d1b36, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .result-tags {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .tag {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 50px;
+        background: linear-gradient(135deg, #fce4ec, #f3e8ff);
+        color: #6b5b7b;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .result-desc {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #4a3f5c;
+        text-align: left;
+        padding: 0 4px;
+      }
+      .result-analysis-card {
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 20px;
+        padding: 24px 24px 22px;
+        max-width: 380px;
+        width: 100%;
+        margin-top: 14px;
+        box-shadow: 0 4px 20px rgba(192, 132, 252, 0.08);
+      }
+      .analysis-deco {
+        font-size: 12px;
+        color: #d4c4e0;
+        letter-spacing: 4px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .analysis-heading {
+        font-size: 14px;
+        font-weight: 600;
+        color: #c084fc;
+        text-align: center;
+        margin-bottom: 14px;
+        letter-spacing: 2px;
+      }
+      .analysis-paragraph {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #4a3f5c;
+        text-align: left;
+        margin-bottom: 12px;
+      }
+      .analysis-paragraph:last-child {
+        margin-bottom: 0;
+      }
+      .result-quote {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #c084fc;
+        font-style: italic;
+        padding: 16px 0;
+        border-top: 1px solid #f0e8f5;
+        border-bottom: 1px solid #f0e8f5;
+        margin-bottom: 4px;
+      }
+      .result-quote::before {
+        content: "\201C";
+        font-size: 32px;
+        color: #ff6b9d;
+        display: block;
+        margin-bottom: -4px;
+      }
+      .result-footer {
+        margin-top: 16px;
+        text-align: center;
+        width: 100%;
+      }
+      .screenshot-tip {
+        font-size: 13px;
+        color: #a895b3;
+        margin-bottom: 6px;
+        line-height: 1.5;
+      }
+      .follow-tip {
+        font-size: 13px;
+        color: #7c6b8a;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      .follow-tip strong {
+        color: #c084fc;
+        font-weight: 600;
+      }
+      .result-footer .btn {
+        margin-top: 4px;
+      }
+      /* ── Responsive ── */
+      @media (max-width: 400px) {
+        .page {
+          padding: 16px;
+        }
+        .cover-card {
+          padding: 28px 20px;
+          border-radius: 24px;
+        }
+        .cover-title {
+          font-size: 24px;
+        }
+        .quiz-card {
+          padding: 24px 18px;
+          border-radius: 24px;
+        }
+        .question-text {
+          font-size: 17px;
+          min-height: 2.8em;
+        }
+        .option {
+          padding: 14px 16px;
+          font-size: 15px;
+          min-height: 48px;
+        }
+        .result-card {
+          padding: 28px 20px 24px;
+          border-radius: 24px;
+        }
+        .result-name {
+          font-size: 24px;
+        }
+        .result-image {
+          width: 130px;
+          height: 130px;
+        }
+        .result-analysis-card {
+          padding: 20px 18px 18px;
+          border-radius: 18px;
+        }
+        .analysis-heading {
+          font-size: 13px;
+        }
+        .analysis-paragraph {
+          font-size: 14px;
+        }
+      }
+      @media (min-height: 800px) {
+        .quiz-card {
+          justify-content: center;
+        }
+        .question-text {
+          margin-bottom: 32px;
+        }
+      }
+      /* ── Ensure scrolling on result page if needed ── */
+      #page-result.active {
+        justify-content: flex-start;
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ═══ COVER PAGE ═══ -->
+    <div id="page-cover" class="page active">
+      <div class="cover-card">
+        <span class="deco deco-1">✦</span>
+        <span class="deco deco-2">✧</span>
+        <span class="deco deco-3">✦</span>
+        <span class="deco deco-4">✧</span>
+        <div class="cover-badge">🎬 青春电影人设测试</div>
+        <h1 class="cover-title">8 种青春女主人设<br />测测哪一种最像你？</h1>
+        <div class="cover-chars">
+          <img src="images/moonlight.png" alt="风里白月光女主" />
+          <img src="images/sweet.png" alt="蜜桃反差甜妹女主" />
+          <img src="images/alpha.png" alt="高能大女主" />
+          <img src="images/road.png" alt="出走公路女主" />
+        </div>
+        <p class="cover-types">
+          校园白月光、清冷智性、反差甜妹、高能大女主、<br />雨季文艺、鬼马少女、暖阳邻家……
+        </p>
+        <button class="btn btn-primary" onclick="startQuiz()">
+          进入我的青春电影
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ QUIZ PAGE ═══ -->
+    <div id="page-quiz" class="page">
+      <div
+        style="
+          width: 100%;
+          max-width: 380px;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          justify-content: center;
+        "
+      >
+        <div class="quiz-header">
+          <button class="btn-back" id="btn-back" onclick="goPrev()">
+            <span class="arrow">&#8592;</span>上一题
+          </button>
+          <div class="question-number">
+            <span id="q-current">01</span> <span>/ 20</span>
+          </div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="question-text" id="question-text"></div>
+          <div class="options" id="options-container"></div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="progress-label" id="progress-label">1 / 20</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ RESULT PAGE ═══ -->
+    <div id="page-result" class="page">
+      <div class="result-scroll">
+        <div class="result-card" id="result-card">
+          <img class="result-image" id="result-image" src="" alt="" />
+          <p class="result-label">你的青春电影女主人设是——</p>
+          <h2 class="result-name" id="result-name"></h2>
+          <div class="result-tags" id="result-tags"></div>
+          <div class="result-quote" id="result-quote"></div>
+        </div>
+        <div class="result-analysis-card">
+          <div class="analysis-deco">✦ ✧ ✦</div>
+          <p class="analysis-heading">关于你的剧本</p>
+          <div id="result-desc"></div>
+        </div>
+        <div class="result-footer">
+          <p class="screenshot-tip">
+            这一页很适合截图。<br />把它发给朋友，看看她们是不是也觉得「有点像你」。
+          </p>
+          <p class="follow-tip">
+            想解锁更多测试，欢迎点击 <strong>@奶盖撞星星</strong>
+          </p>
+          <button class="btn btn-primary" onclick="resetQuiz()">
+            再拍一遍我的青春电影
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ─── Data ───
+      const questions = [
+        {
+          text: "如果你的青春是一部电影，开场镜头最像？",
+          options: [
+            { text: "阳光照进教室，你坐在窗边低头写字", type: 0 },
+            { text: "深夜便利店门口，你一个人戴着耳机走出来", type: 4 },
+            { text: "操场边，你和朋友笑到直不起腰", type: 5 },
+            { text: "清晨车站，你拖着行李箱准备离开熟悉的城市", type: 7 },
+          ],
+        },
+        {
+          text: "你最想拥有哪种青春电影里的名场面？",
+          options: [
+            { text: "在图书馆和某个人隔着书架对视一秒", type: 1 },
+            { text: "穿着卫衣捧着冰淇淋，突然被人夸可爱", type: 2 },
+            { text: "放学后和朋友一起骑车穿过树荫", type: 6 },
+            { text: "在所有人沉默时，你站起来说出真正想说的话", type: 3 },
+          ],
+        },
+        {
+          text: "喜欢一个人时，你更像哪一种状态？",
+          options: [
+            { text: "不主动打扰，但会默默记住对方喜欢的歌", type: 0 },
+            { text: "表面云淡风轻，其实早就把细节分析了几遍", type: 1 },
+            { text: "忍不住分享今天的小事，假装只是顺手发给他", type: 2 },
+            { text: "想靠近又怕靠太近，最后把话写进备忘录", type: 7 },
+          ],
+        },
+        {
+          text: "如果电影里有一场雨，你会出现在哪里？",
+          options: [
+            { text: "站在空旷天台上，头发被风吹乱也不躲", type: 3 },
+            { text: "坐在公交最后一排，看窗外的水痕慢慢流下去", type: 4 },
+            { text: "撑着一把颜色很亮的伞，在雨里故意踩水坑", type: 5 },
+            { text: "把伞往朋友那边偏一点，自己半边肩膀湿掉", type: 6 },
+          ],
+        },
+        {
+          text: "在一群人里，你最容易被什么吸引？",
+          options: [
+            { text: "说话不多，但眼神很干净的人", type: 0 },
+            { text: "看起来很甜，聊天时却说出很清醒的话的人", type: 2 },
+            { text: "有明确目标，走路都带风的人", type: 3 },
+            { text: "笑起来让人放松，像认识了很久的人", type: 6 },
+          ],
+        },
+        {
+          text: "如果给你的青春选一首背景音乐，它会是？",
+          options: [
+            { text: "一首冷静、低频、适合夜晚独处的歌", type: 1 },
+            { text: "一首下雨天听会突然想起很多事的歌", type: 4 },
+            { text: "一首前奏一响就想跑起来的快乐歌", type: 5 },
+            { text: "一首适合坐在长途车上、看城市慢慢后退的歌", type: 7 },
+          ],
+        },
+        {
+          text: "收到一封没有署名的信，你第一反应是？",
+          options: [
+            { text: "愣一下，安静地把它夹进书里", type: 0 },
+            { text: "直接去找线索，想知道是谁写的", type: 3 },
+            { text: "一边吐槽一边忍不住笑", type: 5 },
+            { text: "读完后很久不说话，像被旧梦击中", type: 7 },
+          ],
+        },
+        {
+          text: "朋友临时约你去看午夜场电影，你会？",
+          options: [
+            { text: "理性评估明天安排再决定", type: 1 },
+            { text: "嘴上说太突然了，人已经开始换衣服", type: 2 },
+            { text: "被一句「陪我嘛」打动，还是去了", type: 4 },
+            { text: "顺路给大家买饮料和小零食", type: 6 },
+          ],
+        },
+        {
+          text: "你最喜欢哪一种「被喜欢」的感觉？",
+          options: [
+            { text: "对方记得你无意间说过的小事", type: 0 },
+            { text: "对方懂你的沉默，不逼你解释", type: 1 },
+            { text: "对方在你疲惫时给你一个很稳的拥抱", type: 6 },
+            { text: "对方不困住你，而是陪你看更远的地方", type: 7 },
+          ],
+        },
+        {
+          text: "如果电影里有一场毕业典礼，你会是？",
+          options: [
+            { text: "发言的人，声音很稳，眼睛很亮", type: 2 },
+            { text: "把奖状卷起来塞进包里，赶下一场人生", type: 3 },
+            { text: "在人群边缘拍一张有点虚焦的照片", type: 4 },
+            { text: "最后一个走，还在黑板上画了个小表情", type: 5 },
+          ],
+        },
+        {
+          text: "你最想把哪一帧画面做成自己的头像？",
+          options: [
+            { text: "白衬衫、窗帘、阳光，侧脸被风吹得很柔", type: 0 },
+            { text: "奶油色毛衣、粉色耳机，眼睛亮晶晶", type: 2 },
+            { text: "雨夜街灯下，一个人低头走过斑马线", type: 4 },
+            { text: "公路边、牛仔外套、风吹起头发的背影", type: 7 },
+          ],
+        },
+        {
+          text: "当计划突然被打乱，你更可能？",
+          options: [
+            { text: "迅速重排优先级，先解决最重要的", type: 1 },
+            { text: "直接扛住场面，谁慌你都不慌", type: 3 },
+            { text: "用一个玩笑把气氛救回来", type: 5 },
+            { text: "先照顾大家情绪，再慢慢处理问题", type: 6 },
+          ],
+        },
+        {
+          text: "你心里最想守住的东西是？",
+          options: [
+            { text: "少女时代某个很干净的心动瞬间", type: 0 },
+            { text: "自己的判断力和清醒感", type: 1 },
+            { text: "可以选择人生方向的主动权", type: 3 },
+            { text: "那些没人知道但对你很重要的小情绪", type: 4 },
+          ],
+        },
+        {
+          text: "如果朋友形容你，她最可能说？",
+          options: [
+            { text: "「看起来软软的，其实很有自己的想法」", type: 2 },
+            { text: "「有她在就不会无聊，永远能整出新花样」", type: 5 },
+            { text: "「跟她待着很舒服，真的很会让人放松」", type: 6 },
+            { text: "「她不是叛逆，她只是没办法假装自己不想走」", type: 7 },
+          ],
+        },
+        {
+          text: "如果你在青春电影里有一个秘密基地，会是？",
+          options: [
+            { text: "教学楼尽头那间很少有人来的空教室", type: 0 },
+            { text: "旧书店二楼靠窗的位置", type: 4 },
+            { text: "学校后门那家老板认识你的奶茶店", type: 5 },
+            { text: "城市边缘一条通往远方的公路", type: 7 },
+          ],
+        },
+        {
+          text: "你更喜欢哪一种穿搭氛围？",
+          options: [
+            { text: "黑白灰、线条干净，有距离感的高级感", type: 1 },
+            { text: "奶油色、浅粉色、小配饰，甜但不刻意", type: 2 },
+            { text: "针织衫、帆布包，干净舒服的生活感", type: 6 },
+            { text: "西装外套、利落长裤，一出现就有存在感", type: 3 },
+          ],
+        },
+        {
+          text: "面对一段暧昧关系，你更像？",
+          options: [
+            { text: "慢慢观察，不急着确认，心动也要留白", type: 0 },
+            { text: "认真判断这段关系值不值得投入", type: 1 },
+            { text: "嘴硬说随便，偷偷期待对方消息", type: 2 },
+            { text: "喜欢归喜欢，不想因此丢掉自己的方向", type: 7 },
+          ],
+        },
+        {
+          text: "如果你的人生有一个转场镜头，最像？",
+          options: [
+            { text: "推开会议室的门，所有人都看向你", type: 3 },
+            { text: "黄昏时坐在窗边，手里握着冷掉的咖啡", type: 4 },
+            { text: "跑进便利店躲雨，顺手买了两根烤肠", type: 5 },
+            { text: "晚风穿过小巷，你和重要的人并肩慢慢走", type: 6 },
+          ],
+        },
+        {
+          text: "你最容易为什么而心动？",
+          options: [
+            { text: "某个人看向你时很认真、很温柔", type: 0 },
+            { text: "某个人明明可爱，却在关键时刻很坚定", type: 2 },
+            { text: "某个人有野心，也尊重你的野心", type: 3 },
+            { text: "某个人让你觉得被照顾也可以很自然", type: 6 },
+          ],
+        },
+        {
+          text: "如果电影最后给你一个结尾镜头，你希望是？",
+          options: [
+            { text: "你在安静的夜里合上书，想明白了很多事", type: 1 },
+            { text: "把没寄出的信放进抽屉，笑着和过去告别", type: 4 },
+            { text: "你和朋友在人群里挥手，笑声盖过所有遗憾", type: 5 },
+            { text: "你坐上开往远方的车，窗外的光一点点亮起来", type: 7 },
+          ],
+        },
+      ];
+
+      const results = [
+        {
+          name: "风里白月光女主",
+          image: "moonlight",
+          tags: ["干净", "温柔", "初恋感", "留白"],
+          description: [
+            "你不是那种一出场就很热闹的人。",
+            "很多时候，你只是安安静静地待在那里，不抢话，也不急着证明自己。但很奇怪，真正相处过的人，反而很容易在很久以后想起你。可能是你说话时的分寸感，可能是你没有刻意表现出来的真诚，也可能是某个夏天午后，你低头笑了一下的样子。",
+            "你对关系其实很慢热。不是装冷，也不是故意疏远，只是你需要时间确认一个人是不是值得。你不太会把喜欢说得很满，也不习惯把难过闹得很大，很多情绪都被你轻轻放在心里。",
+            "你的温柔很干净，但不是没有原则。你可以很好说话，也可以很安静地离开。别人以为你柔软，其实你心里一直知道，谁可以靠近，谁只能停在风里。",
+          ],
+          quote: "你不是谁青春里的配角，你本身就是那束让人记很久的光。",
+        },
+        {
+          name: "冷调智性女主",
+          image: "cool",
+          tags: ["清醒", "克制", "聪明", "疏离感"],
+          description: [
+            "你身上有一种很难被轻易看透的冷感。",
+            "不是故意端着，而是你真的不喜欢太快交出自己。别人越热烈，你反而越会先退一步观察。对方说的话有没有逻辑，情绪稳不稳定，是不是真的尊重你，你其实都在心里默默记分。",
+            "你不太吃那种夸张的浪漫。比起一句「我喜欢你」，你更在意这个人能不能听懂你的沉默，能不能接住你的想法，能不能在你不想解释的时候，也不轻易误解你。",
+            "很多人觉得你难靠近，但你只是把热情藏得比较深。你不是没有心动，也不是不会深情。只是对你来说，喜欢一个人是很慎重的事。你宁愿慢一点，也不想把自己交给一段让你失控的关系。",
+            "你的清醒感很迷人。像冬天的玻璃窗，看起来冷，靠近了才发现里面有光。",
+          ],
+          quote: "你看起来冷，只是因为你把热情留给了真正值得的人。",
+        },
+        {
+          name: "蜜桃反差甜妹女主",
+          image: "sweet",
+          tags: ["甜感", "松弛", "反差", "灵动"],
+          description: [
+            "你看起来很甜，但千万不要以为你好拿捏。",
+            "你是那种会因为一点小事开心起来的人。喜欢的饮料、突然拍到的好看天空、朋友一句随口的夸奖，都能让你的情绪亮一下。你身上有很自然的亲近感，让人觉得和你待在一起很轻松。",
+            "但你的甜不是讨好。你可以撒娇，可以嘴硬，可以把气氛变得软乎乎的，可一旦真的碰到原则，你会突然变得很清楚。谁在敷衍你，谁只是享受你的可爱却不认真对待你，你不是感觉不到。",
+            "你最抓人的地方，就是这种反差。平时像一颗蜜桃，柔软、明亮、带一点少女感；关键时刻又像一颗小太阳，有自己的温度，也有自己的方向。",
+            "你不是单纯可爱。你是甜里带着清醒，软里藏着主见。",
+          ],
+          quote: "你不是单纯可爱，你是甜里带着清醒的女主角。",
+        },
+        {
+          name: "高能大女主",
+          image: "alpha",
+          tags: ["目标感", "强气场", "独立", "掌控感"],
+          description: [
+            "你的人生不太适合被别人安排。",
+            "你骨子里有一种不服输的劲儿。哪怕表面看起来没那么张扬，心里也很清楚自己想要什么、不想要什么。别人可以给建议，但不能替你决定。你最讨厌的，就是被低估、被控制，或者被一句「你不行」轻易定义。",
+            "你不是时时刻刻都很强。你也会累，会委屈，会有想摆烂的时候。但只要你真的认定了一件事，就会突然变得很狠，甚至连自己都不太心疼自己。你知道哭完没用，所以最后还是会擦干眼泪继续往前走。",
+            "在关系里，你要的不是被谁拯救，而是被认真尊重。你可以爱人，也可以温柔，但前提是你不能为了任何人变小。",
+            "你最有魅力的地方，是你身上那种「我会自己走下去」的力量。哪怕没人给你打光，你也会成为剧情的转折点。",
+          ],
+          quote: "你不用等谁来拯救，因为你自己就是剧情的反转。",
+        },
+        {
+          name: "雨季文艺女主",
+          image: "rainy",
+          tags: ["敏感", "浪漫", "破碎感", "故事感"],
+          description: [
+            "你是那种很容易被细节打动的人。",
+            "别人随口说的一句话，你可能会记很久。某个黄昏的颜色、一场雨的味道、聊天框里突然停住的沉默，都会在你心里留下痕迹。你不是故意多想，只是你的感受比别人更细，也更难假装什么都没发生。",
+            "所以你其实很怕被敷衍。你可以接受慢一点，也可以接受不够完美，但你受不了自己的认真被轻轻带过。你不轻易把心摊开，是因为你知道，一旦真的在意，你会比自己想象中更投入。",
+            "你看起来有一点破碎感，但不是软弱。很多时候，你都是一个人慢慢消化情绪，再安静地把自己拼起来。你不会大声说「我受伤了」，只是某一天突然不再提起。",
+            "你的浪漫不是矫情。是你在这个容易变麻木的世界里，还认真感受着每一次心动和难过。",
+          ],
+          quote: "你不是容易难过，你只是比别人更认真地感受这个世界。",
+        },
+        {
+          name: "鬼马胶片女主",
+          image: "quirky",
+          tags: ["古灵精怪", "有梗", "自由", "鲜活"],
+          description: [
+            "你一出现，生活就不太像正常剧本了。",
+            "你脑子里总有一些奇奇怪怪又很好玩的想法。别人觉得普通的瞬间，你总能发现一点可爱的小细节；别人尴尬到不知道说什么的时候，你可能一个表情、一句话，就把气氛救回来了。",
+            "你看起来像快乐开关，好像永远有梗，永远能把日子过得不无聊。但熟悉你的人才知道，你其实很敏感。谁突然没那么开心了，谁在假装没事，谁只是需要一个台阶，你通常都看得出来。",
+            "只是你不喜欢把关心弄得太沉重。你更习惯用玩笑、陪伴，或者一些很轻的小动作，把别人从情绪里拉出来。",
+            "你不是没心没肺。你只是选择用更轻盈的方式爱这个世界。像一卷被阳光晒过的胶片，每一帧都鲜活得让人想保存。",
+          ],
+          quote: "你一出现，青春电影就从黑白变成了彩色。",
+        },
+        {
+          name: "暖阳邻家女主",
+          image: "cozy",
+          tags: ["治愈", "真诚", "陪伴感", "生活感"],
+          description: [
+            "你给人的安心感，是很少见的。",
+            "和你在一起，不一定会有特别抓马的剧情，但会觉得舒服。你会记得别人喜欢什么，也会注意到一些没说出口的小情绪。朋友累了，你不会讲一堆大道理，可能只是递一杯热奶茶，或者轻轻说一句「没关系」。",
+            "你的温柔很生活化，不夸张，却很容易让人依赖。很多人靠近你之后，会觉得自己好像终于可以不用那么紧绷了。你像傍晚回家路上的一盏灯，不刺眼，但一直在那里。",
+            "不过你并不是没有脾气的人。你可以照顾别人，也愿意体谅很多事，但如果一段关系里只有你在付出，你会慢慢收回自己的好。你不会吵得很难看，只是会变得越来越安静。",
+            "你的温柔不是谁都能拥有的。它很暖，也很有分寸。真正懂你的人，才知道这份安心感有多珍贵。",
+          ],
+          quote: "你的温柔不是软弱，是让人愿意停靠的力量。",
+        },
+        {
+          name: "出走公路女主",
+          image: "road",
+          tags: ["自由", "叛逆", "清醒", "野生"],
+          description: [
+            "你心里一直有风，也一直有想离开的冲动。",
+            "不是说你真的不在乎任何人，而是你很害怕被困住。被安排好的人生、被定义好的性格、被要求乖乖待在原地的关系，都会让你觉得喘不过气。你需要空间，需要选择，也需要确认自己还属于自己。",
+            "你看起来潇洒，其实也会舍不得。你不是说走就走、毫无牵挂的人。很多次想离开之前，你也会犹豫，会回头，会问自己是不是太敏感了。但如果一个地方真的让你慢慢失去光，你最后还是会把自己带走。",
+            "你需要爱，但不能是把你困住的爱。真正适合你的人，不会急着驯服你，而是愿意理解你为什么总想看看远方。",
+            "你不是不安定。你只是比别人更早听见了心里的声音：人生这么长，不能一直停在不属于自己的地方。",
+          ],
+          quote: "你不是不安定，你只是比别人更早听见了远方在叫你。",
+        },
+      ];
+
+      const LETTERS = ["A", "B", "C", "D"];
+
+      // ─── State ───
+      let currentQuestion = 0;
+      let scores = new Array(8).fill(0);
+      let answers = new Array(20).fill(-1); // which option index was chosen (-1 = none)
+
+      // ─── Page switching ───
+      function showPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+      }
+
+      // ─── Cover → Quiz ───
+      function startQuiz() {
+        showPage("page-quiz");
+        currentQuestion = 0;
+        renderQuestion();
+      }
+
+      // ─── Render question ───
+      function renderQuestion() {
+        const q = questions[currentQuestion];
+        document.getElementById("question-text").textContent = q.text;
+
+        // Question number
+        document.getElementById("q-current").textContent = String(
+          currentQuestion + 1,
+        ).padStart(2, "0");
+
+        // Back button visibility
+        document
+          .getElementById("btn-back")
+          .classList.toggle("hidden", currentQuestion === 0);
+
+        // Options
+        const container = document.getElementById("options-container");
+        container.innerHTML = "";
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement("button");
+          btn.className =
+            "option" + (answers[currentQuestion] === idx ? " selected" : "");
+          btn.innerHTML =
+            '<span class="option-letter">' +
+            LETTERS[idx] +
+            "</span>" +
+            opt.text;
+          btn.addEventListener("click", () => selectOption(idx));
+          container.appendChild(btn);
+        });
+
+        // Progress
+        const pct = ((currentQuestion + 1) / questions.length) * 100;
+        document.getElementById("progress-fill").style.width = pct + "%";
+        document.getElementById("progress-label").textContent =
+          currentQuestion + 1 + " / " + questions.length;
+      }
+
+      // ─── Select option ───
+      function selectOption(optionIndex) {
+        const q = questions[currentQuestion];
+        const type = q.options[optionIndex].type;
+
+        // Update scores
+        if (answers[currentQuestion] !== -1) {
+          // Remove previous answer's score
+          const prevType = q.options[answers[currentQuestion]].type;
+          scores[prevType]--;
+        }
+        scores[type]++;
+        answers[currentQuestion] = optionIndex;
+
+        // Advance
+        if (currentQuestion < questions.length - 1) {
+          currentQuestion++;
+          renderQuestion();
+        } else {
+          showResult();
+        }
+      }
+
+      // ─── Previous question ───
+      function goPrev() {
+        if (currentQuestion > 0) {
+          currentQuestion--;
+          renderQuestion();
+        }
+      }
+
+      // ─── Calculate & show result ───
+      function showResult() {
+        // Find each type's last selected question index
+        const lastSelected = new Array(8).fill(-1);
+        for (let q = 0; q < answers.length; q++) {
+          if (answers[q] !== -1) {
+            lastSelected[questions[q].options[answers[q]].type] = q;
+          }
+        }
+
+        // Find max score
+        let maxScore = -1;
+        for (let i = 0; i < scores.length; i++) {
+          if (scores[i] > maxScore) maxScore = scores[i];
+        }
+
+        // Collect tied types
+        const tied = [];
+        for (let i = 0; i < scores.length; i++) {
+          if (scores[i] === maxScore) tied.push(i);
+        }
+
+        // Tiebreaker: most recently selected wins; if still tied, array order
+        let resultIdx = tied[0];
+        if (tied.length > 1) {
+          tied.sort((a, b) => lastSelected[b] - lastSelected[a]);
+          resultIdx = tied[0];
+        }
+
+        const r = results[resultIdx];
+        document.getElementById("result-image").src = encodeURI(
+          "images/" + r.image + ".png",
+        );
+        document.getElementById("result-image").alt = r.name;
+        document.getElementById("result-name").textContent = r.name;
+
+        const tagsContainer = document.getElementById("result-tags");
+        tagsContainer.innerHTML = "";
+        r.tags.forEach((tag) => {
+          const span = document.createElement("span");
+          span.className = "tag";
+          span.textContent = tag;
+          tagsContainer.appendChild(span);
+        });
+
+        const descContainer = document.getElementById("result-desc");
+        descContainer.innerHTML = "";
+        r.description.forEach((para) => {
+          const p = document.createElement("p");
+          p.className = "analysis-paragraph";
+          p.textContent = para;
+          descContainer.appendChild(p);
+        });
+        document.getElementById("result-quote").textContent = r.quote;
+
+        showPage("page-result");
+      }
+
+      // ─── Reset ───
+      function resetQuiz() {
+        currentQuestion = 0;
+        scores.fill(0);
+        answers.fill(-1);
+        showPage("page-cover");
+      }
+    </script>
+  </body>
+</html>
